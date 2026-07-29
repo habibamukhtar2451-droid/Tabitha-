@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Surprise For You! 💖</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Beautiful Google Fonts for Text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* Premium Dark Theme Overrides */
+    body {
+      background: linear-gradient(135deg, #18080c 0%, #2a0b12 50%, #120613 100%) !important;
+      color: #f1e6ff;
+    }
+
+    .card {
+      background: rgba(35, 18, 41, 0.85) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 126, 187, 0.25) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .wish-box {
+      background: rgba(20, 10, 25, 0.6) !important;
+      border: 1px solid rgba(255, 126, 187, 0.2) !important;
+    }
+
+    .wish-box p {
+      color: #e0d0e6 !important;
+    }
+
+    .action-btn, .btn-yes, .btn-no, .bye-btn {
+      background: linear-gradient(45deg, #d81b60, #ff4081) !important;
+      box-shadow: 0 4px 15px rgba(216, 27, 96, 0.5) !important;
+      border: none !important;
+      color: #ffffff !important;
+      cursor: pointer;
+    }
+
+    /* Gift Box Styling */
+    .gift-box {
+      font-size: 70px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin: 15px 0;
+      user-select: none;
+    }
+
+    .gift-box:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    #surprise-content {
+      display: none;
+      margin-top: 15px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    /* Double Polaroid Collage Styling */
+    .polaroid-container {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      margin: 15px auto;
+      max-width: 310px;
+      border: 1px solid #ffb3d1;
+    }
+
+    .photos-grid {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .polaroid-img {
+      width: 48%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #fff0f5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid-img:nth-child(1) {
+      transform: rotate(-3deg);
+    }
+
+    .polaroid-img:nth-child(2) {
+      transform: rotate(3deg);
+    }
+
+    .polaroid-img:hover {
+      transform: scale(1.05) rotate(0deg);
+    }
+
+    /* Beautiful Styled Text */
+    .polaroid-text {
+      color: #3a0ca3;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      font-family: 'Caveat', cursive, sans-serif;
+      text-align: center;
+      background: #fff0f6;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed #ff85b3;
+    }
+
+    .highlight-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #d81b60;
+      font-size: 1rem;
+      display: block;
+      margin-top: 6px;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Balloons & Flowers Animation */
+    .popup-item {
+      position: fixed;
+      bottom: -50px;
+      pointer-events: none;
+      z-index: 10000;
+      animation: floatUp 4s linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-bg"></div>
+
+  <!-- Background Music Player -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+
+  <!-- STEP 1: PASSCODE SCREEN -->
+  <div id="step-passcode" class="card active">
+    <img src="excited.gif" alt="Cute Cat" class="card-img">
+    <h2>Enter a passcode</h2>
+    <div class="code-dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="keypad">
+      <button onclick="pressNum('1')">1</button>
+      <button onclick="pressNum('2')">2</button>
+      <button onclick="pressNum('3')">3</button>
+      <button onclick="pressNum('4')">4</button>
+      <button onclick="pressNum('5')">5</button>
+      <button onclick="pressNum('6')">6</button>
+      <button onclick="pressNum('7')">7</button>
+      <button onclick="pressNum('8')">8</button>
+      <button onclick="pressNum('9')">9</button>
+      <button onclick="clearPin()">*</button>
+      <button onclick="pressNum('0')">0</button>
+      <button onclick="clearPin()">#</button>
+    </div>
+    <button class="action-btn" onclick="checkPasscode()">UNLOCK</button>
+  </div>
+
+  <!-- STEP 1.5: WRONG PASSCODE MODAL -->
+  <div id="modal-wrong" class="card modal">
+    <h2>WRONG PASSCODE!</h2>
+    <img src="sad.gif" alt="Sad Pikachu" class="card-img">
+    <button class="action-btn" onclick="retryPasscode()">TRY AGAIN</button>
+  </div>
+
+  <!-- STEP 2: WANT TO SEE QUESTION -->
+  <div id="step-question1" class="card">
+    <h2>I made something special for u,<br>do u want to see?</h2>
+    <img src="specical.gif" alt="Cute Cats Box" class="card-img">
+    <div class="btn-group">
+      <button class="btn-yes" onclick="nextStep('step-hbday')">YES</button>
+      <button class="btn-no" onclick="showNoWarning()">NO</button>
+    </div>
+  </div>
+
+  <!-- STEP 2.5: NO WARNING -->
+  <div id="modal-no-warn" class="card modal">
+    <h2>Why did u click no?! 🥺</h2>
+    <img src="cring.gif" alt="Crying Cat" class="card-img">
+    <button class="action-btn" onclick="closeNoWarning()">TRY AGAIN</button>
+  </div>
+
+  <!-- STEP 3: HAPPY BIRTHDAY CARD -->
+  <div id="step-hbday" class="card">
+    <h2 class="title-pink">HAPPY BIRTHDAY 🎉</h2>
+    <img src="birthayyy.gif" alt="Happy Birthday Cats" class="card-img">
+    <button class="action-btn" onclick="nextStep('step-wish')">CLICK ME</button>
+  </div>
+
+  <!-- STEP 4: MY WISH FOR YOU -->
+  <div id="step-wish" class="card">
+    <h2 class="title-pink wish-title">🎉 Happy Birthday My Cute Eizan! 💖</h2>
+    <div class="wish-box">
+      <p><b>Happy Birthday to my dearest Eizan! 🎂✨</b> Sab se pehle tumhein bohot bohot mubarak ho! Mujhe pata hai ke abhi yeh message padhte hue bhi tumhara mind active hoga aur tum ek ek lafz ko deep observe kar rahi hogi! 😂 Agar overthinking ki koi game hoti, toh sach mein meri Eizan ko Gold Medal milta! 🥇</p>
+      
+      <p>Par pata hai? Tumhara yeh nature mujhe bohot acha lagta hai. Tum choti choti cheezon ko notice karti ho jo baaki log miss kar dete hain. Haan, sometimes tum raaton ko jaag kar ek hi baat ko baar baar sochti rehti ho 🌙💭, lekin asal mein yeh dikhata hai ke tumhara heart kitna soft hai aur tum sab ki kitni care karti ho. ❤️</p>
+      
+      <p>Tumhari cute smile 😊, tumhare mood swings, aur phir cute sa confused ho jana yeh sab cheezein mil kar tumhein meri sab se favorite person banati hain. Thank you for being in my life! 🌸💖 Aaj ke din please bilkul overthinking mat karna, bus khush raho aur smile karo. 😄✨</p>
+      
+      <p><b>My Prayer For You 🤲✨</b><br>
+      May Allah bless you with a long, healthy, and happy life. May He accept all your duas and replace your late-night tension with absolute peace and calm. 🌙💖 Wish you the most amazing year ahead Eizan! Happy Birthday once again! 🎂🎉🥳</p>
+    </div>
+    <button class="action-btn" onclick="nextStep('step-hug')">CLICK ME</button>
+  </div>
+
+  <!-- STEP 5: VIRTUAL HUG -->
+  <div id="step-hug" class="card">
+    <h2>Virtual hug for ya! 🤗</h2>
+    <img src="hug.gif" alt="Hug Cat" class="card-img">
+    <h2 class="title-pink">I MISS YOU</h2>
+    <button class="action-btn" onclick="nextStep('step-mine')">CLICK ME</button>
+  </div>
+
+  <!-- STEP 6: WILL YOU BE MINE? -->
+  <div id="step-mine" class="card">
+    <h2 class="title-pink">Will you be mine? 👑</h2>
+    <img src="flower.gif" alt="Cute Cats Flowers" class="card-img">
+    <div class="btn-group">
+      <button class="btn-yes" onclick="nextStep('step-surprise')">YES!</button>
+      <button class="btn-no" onclick="handleFinalNo()">NO</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: SPECIAL SURPRISE (2 POLAROID PHOTOS + BEAUTIFUL TEXT) -->
+  <div id="step-surprise" class="card">
+    <h2 class="title-pink">🎁 A Special Surprise For You!</h2>
+    <p>Neeche gift box par click karo surprise dekhne ke liye:</p>
+    <div class="gift-box" onclick="revealSurprise()">🎁</div>
+    
+    <div id="surprise-content">
+      <div class="polaroid-container">
+        <!-- Two Side-by-Side Photos -->
+        <div class="photos-grid">
+          <img src="eizan1.jpg" alt="Special Memory 1" class="polaroid-img">
+          <img src="eizan2.jpg" alt="Special Memory 2" class="polaroid-img">
+        </div>
+        
+        <!-- Beautifully Styled Handwritten/Aesthetic Message -->
+        <div class="polaroid-text">
+          "Some gifts come wrapped in paper, but the greatest gift in my life is simply having you in it. 💕<br><br>
+          No matter how much time passes, having you by my side will always be my favorite part of life.<br><br>
+          <span class="highlight-text">You truly mean more to me than words could ever express, and you will always be deeply special to me. 🌸✨</span>"
+        </div>
+      </div>
+      <button class="action-btn" style="margin-top: 10px;" onclick="nextStep('step-video')">NEXT ➡️</button>
+    </div>
+  </div>
+
+  <!-- STEP 8: CUTE VIDEO CARD -->
+  <div id="step-video" class="card">
+    <h2 class="title-pink">Special Video For You 🎥</h2>
+    <div class="video-box">
+      <video controls poster="my-video.mp4">
+        <source src="my-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <br>
+    <button class="action-btn" onclick="nextStep('step-byebye')">NEXT ➡️</button>
+  </div>
+
+  <!-- STEP 9: BYE BYE FINAL PAGE -->
+  <div id="step-byebye" class="card">
+    <h2 class="title-pink">👋 Bye Bye & Take Care!</h2>
+    <img src="see u.gif" alt="Sweet Ending Cat" class="card-img">
+    <p class="ending-text" style="color: #d1c4e9; margin-bottom: 15px;">
+      You mean the world to me! Always stay happy and keep smiling. Happy Birthday once again! 🎈✨
+    </p>
+    <button class="bye-btn" onclick="triggerByeByeMagic()">Click for Bye Bye Magic! 🎈🌸</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function revealSurprise() {
+      document.getElementById('surprise-content').style.display = 'block';
+    }
+
+    function triggerByeByeMagic() {
+      const items = ['🎈', '🌸', '🌹', '✨', '🌺', '🎉', '💐', '🎂'];
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'popup-item';
+          el.innerText = items[Math.floor(Math.random() * items.length)];
+          el.style.left = Math.random() * 100 + 'vw';
+          el.style.fontSize = (Math.random() * 25 + 25) + 'px';
+          el.style.animationDuration = (Math.random() * 2 + 3) + 's';
+          document.body.appendChild(el);
+          setTimeout(() => { el.remove(); }, 4000);
+        }, i * 80);
+      }
+    }
+  </script>
+</body>
+</html>
